@@ -56,7 +56,7 @@ Dependency Build Instructions: Ubuntu & Debian
 Build requirements:
 
 	sudo apt-get install build-essential
-	sudo apt-get install libssl-dev
+	sudo apt-get install git build-essential libssl1.0-dev libboost-all-dev libdb5.1-dev libdb5.1++-dev libgtk2.0-dev libminiupnpc-dev qt4-dev synaptic libdb++-dev
 
 for Ubuntu 12.04:
 
@@ -69,9 +69,8 @@ for Ubuntu 12.04:
 
 for other Ubuntu & Debian:
 
-	sudo apt-get install libdb4.8-dev
-	sudo apt-get install libdb4.8++-dev
-	sudo apt-get install libboost1.37-dev
+	sudo apt-get install git build-essential libssl1.0-dev libboost-all-dev libdb5.1-dev libdb5.1++-dev libgtk2.0-dev libminiupnpc-dev qt4-dev synaptic libdb++-dev
+	
  (If using Boost 1.37, append -mt to the boost libraries in the makefile)
 
 Optional:
