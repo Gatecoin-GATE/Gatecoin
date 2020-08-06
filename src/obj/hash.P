@@ -1,0 +1,4 @@
+obj/hash.o: hash.cpp hash.h uint256.h serialize.h allocators.h version.h \
+ clientversion.h sph_blake.h sph_types.h
+hash.cpp hash.h uint256.h serialize.h allocators.h version.h :
+ clientversion.h sph_blake.h sph_types.h :
