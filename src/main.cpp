@@ -2759,10 +2759,10 @@ bool LoadBlockIndex()
 {
     if (fTestNet)
     {
-        pchMessageStart[0] = 0x0b;
+        pchMessageStart[0] = 0x07;
         pchMessageStart[1] = 0x11;
-        pchMessageStart[2] = 0x09;
-        pchMessageStart[3] = 0x07;
+        pchMessageStart[2] = 0x18;
+        pchMessageStart[3] = 0x79;
         hashGenesisBlock = uint256("0x0000006a6b8058247f5b0edb1b34df7d34ae6c963c49da21b62a4b6558ac94dc");
     }
 
@@ -2794,13 +2794,13 @@ bool InitBlockIndex() {
 */
 
         // Genesis block
-        const char* pszTimestamp = "US forces target leading al-Shabaab militant in Somalian coastal raid";
+        const char* pszTimestamp = "7/11/1879 Birth of socialism, the beauty of equality and facing the future together.";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 486604799 << CBigNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
         txNew.vout[0].nValue = nGenesisBlockRewardCoin;
-        txNew.vout[0].scriptPubKey = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+        txNew.vout[0].scriptPubKey = CScript() << ParseHex("04ad7abe1191a1404b363269dcea930692127c60f6d64c9fbff5fac40e4cfdff00435163431490d723dcb9d512e283d626718ac5b0e3115cf288a28d7416b39cff") << OP_CHECKSIG;
         CBlock block;
         block.vtx.push_back(txNew);
         block.hashPrevBlock = 0;
@@ -3099,7 +3099,7 @@ bool static AlreadyHave(const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xf9, 0xbe, 0xb4, 0xd2 };
+unsigned char pchMessageStart[4] = { 0xfc, 0xb2, 0xc4, 0xa3 };
 
 
 void static ProcessGetData(CNode* pfrom)
