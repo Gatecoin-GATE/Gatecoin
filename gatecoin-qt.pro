@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = gatecoin-qt
 macx:TARGET = "Gatecoin-Qt"
-VERSION = 0.8.9.6
+VERSION = 1.0.0.2
 INCLUDEPATH += src src/json src/qt
 QT += core gui network
 #DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
@@ -27,19 +27,20 @@ USE_UPNP:=1
 windows:LIBS += -lshlwapi
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
-LIBS += -lboost_system-mgw49-mt-s-1_55 -lboost_filesystem-mgw49-mt-s-1_55 -lboost_program_options-mgw49-mt-s-1_55 -lboost_thread-mgw49-mt-s-1_55
-BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
-BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
-BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
-BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
-BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2e/include
-OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2e
+LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread
+BOOST_LIB_SUFFIX=-mgw49-mt-s-1_73 
+# BOOST_LIB_SUFFIX=-mgw8-mt-s-x32-1_73
+BOOST_INCLUDE_PATH=C:/deps/boost_1_73_0
+BOOST_LIB_PATH=C:/deps/boost_1_73_0/stage/lib
+BDB_INCLUDE_PATH=C:/deps/db-6.2.38.NC/build_unix
+BDB_LIB_PATH=C:/deps/db-6.2.38.NC/build_unix
+OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2u/include
+OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2u
 MINIUPNPC_LIB_SUFFIX=-miniupnpc
 MINIUPNPC_INCLUDE_PATH=C:/deps/miniupnpc
 MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
-QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
-QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
+QRENCODE_INCLUDE_PATH=C:/deps/qrencode-4.0.2
+QRENCODE_LIB_PATH=C:/deps/qrencode-4.0.2/.libs
 LIBPNG_INCLUDE_PATH=C:/deps/libpng-1.6.20
 # End of Windows Paths
 
@@ -452,9 +453,9 @@ LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # -lgdi32 has to happen after -lcrypto (see  #681)
 win32:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
-win32:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
-macx:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
+LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread
+win32:LIBS += -lboost_chrono
+macx:LIBS += -lboost_chrono
 
 contains(RELEASE, 1) {
     !win32:!macx {

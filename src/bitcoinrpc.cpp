@@ -348,7 +348,7 @@ static string HTTPReply(int nStatus, const string& strMsg, bool keepalive)
             "HTTP/1.1 %d %s\r\n"
             "Date: %s\r\n"
             "Connection: %s\r\n"
-            "Content-Length: %"PRIszu"\r\n"
+            "Content-Length: %" PRIszu "\r\n"
             "Content-Type: application/json\r\n"
             "Server: gatecoin-json-rpc/%s\r\n"
             "\r\n"
@@ -583,7 +583,14 @@ public:
     }
     bool connect(const std::string& server, const std::string& port)
     {
-        ip::tcp::resolver resolver(stream.get_io_service());
+        //ip::tcp::resolver resolver(stream.get_io_service());
+
+        // Boost Version < 1.70 handling (Updated) - Thank you https://github.com/g1itch
+        boost::asio::ip::tcp::resolver resolver(GetIOService(stream));
+        // Boost Version < 1.70 handling (Depricated) - Thank you Mino#8171
+        // boost::asio::ip::tcp::resolver resolver(stream.get_io_service());
+        // boost::asio::ip::tcp::resolver resolver(GET_IO_SERVICE(stream));
+
         ip::tcp::resolver::query query(server.c_str(), port.c_str());
         ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
         ip::tcp::resolver::iterator end;
@@ -670,7 +677,14 @@ static void RPCListen(boost::shared_ptr< basic_socket_acceptor<Protocol, SocketA
                    const bool fUseSSL)
 {
     // Accept connection
-    AcceptedConnectionImpl<Protocol>* conn = new AcceptedConnectionImpl<Protocol>(acceptor->get_io_service(), context, fUseSSL);
+        //
+    // Boost Version < 1.70 handling - Thank you Mino#8171
+    // Boost 1.70+ update patch by https://github.com/g1itch
+    // (This improves upon Mino's 1.70 support update)
+    //
+    // AcceptedConnectionImpl<Protocol>* conn = new AcceptedConnectionImpl<Protocol>(acceptor->get_io_service(), context, fUseSSL);
+    // AcceptedConnectionImpl<Protocol>* conn = new AcceptedConnectionImpl<Protocol>(GET_IO_SERVICE(acceptor), context, fUseSSL);
+    AcceptedConnectionImpl<Protocol>* conn = new AcceptedConnectionImpl<Protocol>(GetIOServiceFromPtr(acceptor), context, fUseSSL);
 
     acceptor->async_accept(
             conn->sslStream.lowest_layer(),
