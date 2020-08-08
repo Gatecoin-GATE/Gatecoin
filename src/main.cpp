@@ -34,7 +34,7 @@ unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
 uint256 hashGenesisBlock("0x000000ba5cae4648b1a2b823f84cc3424e5d96d7234b39c6bb42800b2c7639be");
-static const unsigned int timeGenesisBlock = 1381036817;
+static const unsigned int timeGenesisBlock = 1596911972;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -1077,37 +1077,24 @@ uint256 static GetOrphanRoot(const CBlockHeader* pblock)
     return pblock->GetHash();
 }
 
-static const int64 nGenesisBlockRewardCoin = 5 * COIN;
-static const int64 nBlockRewardStartCoin = 25 * COIN;
+static const int64 nGenesisBlockRewardCoin = 100000 * COIN;
+static const int64 nBlockRewardStartCoin = 50 * COIN;
 
-static const int64 nTargetTimespan = 60 * 60; // 60 minutes
-static const int64 nTargetSpacing = 3 * 60; // 3 minutes
-static const int64 nInterval = nTargetTimespan / nTargetSpacing; // 20 blocks
+static const int64 nTargetTimespan = 10 * 60; // 10 minutes diff retarget
+static const int64 nTargetSpacing = 10 * 60; // 10 minutes block time
+static const int64 nInterval = nTargetTimespan / nTargetSpacing; // every block
 
 int64 static GetBlockValue(int nHeight, int64 nFees, unsigned int nBits)
 {
+	int64 nSubsidy = nBlockRewardStartCoin;
 
-    if (nHeight == 0)
+	if (nHeight == 0)
     {
-        return nGenesisBlockRewardCoin;
+        nSubsidy = nGenesisBlockRewardCoin;
     }
-    unsigned int basenBits = bnProofOfWorkLimit.GetCompact();
-    int nShift = int((basenBits >> 24) & 0xff) - int((nBits >> 24) & 0xff);
-    double dDiff =
-        (double)(basenBits & 0x007fffff) / (double)(nBits & 0x007fffff);
-    while (nShift > 0)
-    {
-        dDiff *= 256.0;
-        --nShift;
-    }
-    while (nShift < 0)
-    {
-        dDiff /= 256.0;
-        ++nShift;
-    }
-     int64 nSubsidy1 = int64(sqrt(dDiff * nHeight));
-     int64 nSubsidy = nSubsidy1 + nBlockRewardStartCoin;
-    
+
+    nSubsidy >>= (nHeight / 105120); // Gatecoin: 105120 blocks in ~2 years
+
     return nSubsidy + nFees;
 }
 
@@ -2794,7 +2781,7 @@ bool InitBlockIndex() {
 */
 
         // Genesis block
-        const char* pszTimestamp = "7/11/1879 Birth of socialism, the beauty of equality and facing the future together.";
+        const char* pszTimestamp = "7/11/1879 Birth of Leon Trotsky, Father of the revolutionary movement of the Bolshevik party.";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -2812,7 +2799,7 @@ bool InitBlockIndex() {
 
         if (fTestNet)
         {
-            block.nTime    = 1381033532;
+            block.nTime    = 1596911936;
             block.nNonce   = 120396719;
         }
 
