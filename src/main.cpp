@@ -33,7 +33,7 @@ CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
-uint256 hashGenesisBlock("0x000000ba5cae4648b1a2b823f84cc3424e5d96d7234b39c6bb42800b2c7639be");
+uint256 hashGenesisBlock("0x");
 static const unsigned int timeGenesisBlock = 1596911972;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
 CBlockIndex* pindexGenesisBlock = NULL;
@@ -1084,6 +1084,85 @@ static const int64 nTargetTimespan = 10 * 60; // 10 minutes diff retarget
 static const int64 nTargetSpacing = 10 * 60; // 10 minutes block time
 static const int64 nInterval = nTargetTimespan / nTargetSpacing; // every block
 
+unsigned int static DarkGravityWave3(const CBlockIndex* pindexLast, const CBlockHeader *pblock) 
+{
+    /* current difficulty formula, darkcoin - DarkGravity v3, written by Evan Duffield - evan@darkcoin.io */
+    const CBlockIndex *BlockLastSolved = pindexLast;
+    const CBlockIndex *BlockReading = pindexLast;
+    const CBlockHeader *BlockCreating = pblock;
+    BlockCreating = BlockCreating;
+    int64 nActualTimespan = 0;
+    int64 LastBlockTime = 0;
+    int64 PastBlocksMin = 24;
+    int64 PastBlocksMax = 24;
+    int64 CountBlocks = 0;
+    CBigNum PastDifficultyAverage;
+    CBigNum PastDifficultyAveragePrev;
+
+    if (BlockLastSolved == NULL || BlockLastSolved->nHeight == 0 || BlockLastSolved->nHeight < PastBlocksMin) {
+        // This is the first block or the height is < PastBlocksMin
+        // Return minimal required work. (1e0fffff)
+        return bnProofOfWorkLimit.GetCompact(); 
+    }
+    
+    // loop over the past n blocks, where n == PastBlocksMax
+    for (unsigned int i = 1; BlockReading && BlockReading->nHeight > 0; i++) {
+        if (PastBlocksMax > 0 && i > PastBlocksMax) { break; }
+        CountBlocks++;
+
+        // Calculate average difficulty based on the blocks we iterate over in this for loop
+        if(CountBlocks <= PastBlocksMin) {
+            if (CountBlocks == 1) { PastDifficultyAverage.SetCompact(BlockReading->nBits); }
+            else { PastDifficultyAverage = ((PastDifficultyAveragePrev * CountBlocks)+(CBigNum().SetCompact(BlockReading->nBits))) / (CountBlocks+1); }
+            PastDifficultyAveragePrev = PastDifficultyAverage;
+        }
+
+        // If this is the second iteration (LastBlockTime was set)
+        if(LastBlockTime > 0){
+            // Calculate time difference between previous block and current block
+            int64 Diff = (LastBlockTime - BlockReading->GetBlockTime());
+            // Increment the actual timespan
+            nActualTimespan += Diff;
+        }
+        // Set LasBlockTime to the block time for the block in current iteration
+        LastBlockTime = BlockReading->GetBlockTime();      
+
+        if (BlockReading->pprev == NULL) { assert(BlockReading); break; }
+        BlockReading = BlockReading->pprev;
+    }
+    
+    // bnNew is the difficulty
+    CBigNum bnNew(PastDifficultyAverage);
+
+    // nTargetTimespan is the time that the CountBlocks should have taken to be generated.
+    int64 nTargetTimespan = CountBlocks*nTargetSpacing;
+
+    // Limit the re-adjustment to 3x or 0.33x
+    // We don't want to increase/decrease diff too much.
+    if (nActualTimespan < nTargetTimespan/3)
+        nActualTimespan = nTargetTimespan/3;
+    if (nActualTimespan > nTargetTimespan*3)
+        nActualTimespan = nTargetTimespan*3;
+
+    // Calculate the new difficulty based on actual and target timespan.
+    bnNew *= nActualTimespan;
+    bnNew /= nTargetTimespan;
+
+    // If calculated difficulty is lower than the minimal diff, set the new difficulty to be the minimal diff.
+    if (bnNew > bnProofOfWorkLimit){
+        bnNew = bnProofOfWorkLimit;
+    }
+    
+    // Some logging.
+    // TODO: only display these log messages for a certain debug option.
+    printf("Difficulty Retarget - Dark Gravity Wave 3\n");
+    printf("Before: %08x %s\n", BlockLastSolved->nBits, CBigNum().SetCompact(BlockLastSolved->nBits).getuint256().ToString().c_str());
+    printf("After: %08x %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
+
+    // Return the new diff.
+    return bnNew.GetCompact();
+}
+
 int64 static GetBlockValue(int nHeight, int64 nFees, unsigned int nBits)
 {
 	int64 nSubsidy = nBlockRewardStartCoin;
@@ -1148,11 +1227,13 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
                 const CBlockIndex* pindex = pindexLast;
                 while (pindex->pprev && pindex->nHeight % nInterval != 0 && pindex->nBits == nProofOfWorkLimit)
                     pindex = pindex->pprev;
-                return pindex->nBits;
+                return pindexLast->nBits;
+                //return DarkGravityWave3(pindexLast, pblock);
             }
         }
 
         return pindexLast->nBits;
+        //return DarkGravityWave3(pindexLast, pblock);
     }
 
     // Go back by what we want to be nInterval blocks
@@ -2750,7 +2831,7 @@ bool LoadBlockIndex()
         pchMessageStart[1] = 0x11;
         pchMessageStart[2] = 0x18;
         pchMessageStart[3] = 0x79;
-        hashGenesisBlock = uint256("0x0000006a6b8058247f5b0edb1b34df7d34ae6c963c49da21b62a4b6558ac94dc");
+        hashGenesisBlock = uint256("0x");
     }
 
     //
@@ -2804,17 +2885,48 @@ bool InitBlockIndex() {
         }
 
         //// debug print
-        uint256 hash = block.GetHash();
-        while (hash > bnProofOfWorkLimit.getuint256()){
-            if (++block.nNonce==0) break;
-            hash = block.GetHash();
+        if (false && block.GetHash() != hashGenesisBlock) //Used to mine the Genesis Block (Turned OFF)
+        {
+            printf("Searching for genesis block...\n");
+            // This will figure out a valid hash and Nonce if you're
+            // creating a different genesis block:
+            uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
+            uint256 thash;
+ 
+            loop
+            {
+                if (thash <= hashTarget)
+                    break;
+                if ((block.nNonce & 0xFFF) == 0)
+                {
+                    printf("nonce %08X: hash = %s (target = %s)\n", block.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
+                }
+                ++block.nNonce;
+                if (block.nNonce == 0)
+                {
+                    printf("NONCE WRAPPED, incrementing time\n");
+                    ++block.nTime;
+                }
+            }
+            printf("block.nTime = %u \n", block.nTime);
+            printf("block.nNonce = %u \n", block.nNonce);
+            printf("block.GetHash = %s\n", block.GetHash().ToString().c_str());
         }
+
+
+        uint256 hash = block.GetHash();
+        //while (hash > bnProofOfWorkLimit.getuint256())
+        //{
+        //   if (++block.nNonce==0) break;
+        //    hash = block.GetHash();
+        //}
 
         printf("%s\n", hash.ToString().c_str());
         printf("%s\n", hashGenesisBlock.ToString().c_str());
         printf("%s\n", block.hashMerkleRoot.ToString().c_str());
         block.print();
-        assert(block.hashMerkleRoot == uint256("0x9e4654d5bb91c723c3dbbaee57761d06ed10ac17f4d8841746aeec7ff8206ddc"));
+
+        assert(block.hashMerkleRoot == uint256("0xff13f61eb6afff26d8fe6c8c12d90635f1b729a1d0190028deaa732435b9151e"));
         assert(hash == hashGenesisBlock);
 
         // Start new block file

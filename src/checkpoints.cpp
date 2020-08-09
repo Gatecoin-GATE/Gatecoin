@@ -35,32 +35,25 @@ namespace Checkpoints
     // + Contains no strange transactions
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
-        ( 0, uint256("0x000000ba5cae4648b1a2b823f84cc3424e5d96d7234b39c6bb42800b2c7639be"))
-        ( 2499, uint256("0x00000000040fcdd50c1bd5ad140039b6d8f4e7f3ad497115314c0b2c0569b285"))
-        ( 19797, uint256("0x000000000093b59ec621c8d8bcee44a7644e40d236e5cd126619e292e8b22a78"))
-        ( 39253, uint256("0x00000000000fe223ac905ab8902695a52e6c1829809a5cbbf4fdbbad5d11758c"))
-        ( 143000, uint256("0x000000000000178e824cad2eb1e0bd499539750c3b71b3f1c4015f1962de1062"))
-        ( 217000, uint256("0x000000000001d0c2645df7f149081f03e9f5612c6b44b2116b1b84c4781989e2"))
-        ( 297313, uint256("0x00000000000264e992d35a4775d3b4e16e807221401ebbee87ab8cd6505335b1"))
-		( 350620, uint256("0x00000000000132bbab473392bec2230eccc1dcc27af3c4b088c15067734e610a"))
+        ( 0, uint256("0x196f6e5f3f7fe6b5a6be7786f8359e1bb5c64d9be1da5779bf6df858e1f654f2"))
 		;
     static const CCheckpointData data = {
         &mapCheckpoints,
-        1450002328, // * UNIX timestamp of last checkpoint block
-        666946,     // * total number of transactions between genesis and last checkpoint
+        1596911972, // * UNIX timestamp of last checkpoint block
+        0,     // * total number of transactions between genesis and last checkpoint
                     //   (the tx=... number in the SetBestChain debug.log lines)
-        2000.0     // * estimated number of transactions per day after checkpoint
+        1.0     // * estimated number of transactions per day after checkpoint
     };
 
     static MapCheckpoints mapCheckpointsTestnet = 
         boost::assign::map_list_of
-        ( 0, uint256("0x0000006a6b8058247f5b0edb1b34df7d34ae6c963c49da21b62a4b6558ac94dc"))
+        ( 0, uint256("0xf3277267daecd762d1db3aeaaa7c60e351bffe0a896b31ab607a2d789b48dfb8"))
         ;
     static const CCheckpointData dataTestnet = {
         &mapCheckpointsTestnet,
-        1381033532,
+        1596911936,
         0,
-        60000.0
+        1.0
     };
 
     const CCheckpointData &Checkpoints() {
