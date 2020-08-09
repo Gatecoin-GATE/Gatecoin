@@ -8,10 +8,14 @@
 // Name of client reported in the 'version' message. Report the same name
 // for both bitcoind and bitcoin-qt, to make it harder for attackers to
 // target servers or GUI users specifically.
-const std::string CLIENT_NAME("Blake");
+const std::string CLIENT_NAME("Gate");
 
 // Client version number
-#define CLIENT_VERSION_SUFFIX   "-beta"
+#define CLIENT_VERSION_SUFFIX   "-beta" 
+
+//-alpha for testing something experimental
+//-beta, released but still working 
+//-release new client update, probably mandatory
 
 
 // The following part of the code determines the CLIENT_BUILD variable.
@@ -36,15 +40,17 @@ const std::string CLIENT_NAME("Blake");
 // git will put "#define GIT_ARCHIVE 1" on the next line inside archives. 
 #define GIT_ARCHIVE 1
 #ifdef GIT_ARCHIVE
-#    define GIT_COMMIT_ID "8c5e74e"
-#    define GIT_COMMIT_DATE "2015-12-11 11:47:21 +0000"
+#    define GIT_COMMIT_ID "$Format:%h$"
+#    define GIT_COMMIT_DATE "$Format:%cD$"
 #endif
 
+//GATECOIN: More simple version system
+
 #define BUILD_DESC_FROM_COMMIT(maj,min,rev,build,commit) \
-    "v" DO_STRINGIZE(maj) "." DO_STRINGIZE(min) "." DO_STRINGIZE(rev) "." DO_STRINGIZE(build) "-g" commit
+    "v1.0.0.3"
 
 #define BUILD_DESC_FROM_UNKNOWN(maj,min,rev,build) \
-    "v" DO_STRINGIZE(maj) "." DO_STRINGIZE(min) "." DO_STRINGIZE(rev) "." DO_STRINGIZE(build) "-unk"
+    "v1.0.0.3"
 
 #ifndef BUILD_DESC
 #    ifdef GIT_COMMIT_ID
