@@ -9,7 +9,7 @@ obj/main.o: main.cpp alert.h uint256.h util.h netbase.h serialize.h \
  /home/valen/Gatecoin/src/leveldb/include/leveldb/status.h \
  /home/valen/Gatecoin/src/leveldb/include/leveldb/options.h \
  /home/valen/Gatecoin/src/leveldb/include/leveldb/write_batch.h init.h \
- wallet.h ui_interface.h walletdb.h base58.h checkqueue.h
+ wallet.h ui_interface.h walletdb.h base58.h checkqueue.h blockparams.h
 main.cpp alert.h uint256.h util.h netbase.h serialize.h :
  allocators.h version.h clientversion.h compat.h checkpoints.h db.h :
  main.h bignum.h sync.h threadsafety.h net.h mruset.h limitedmap.h :
@@ -21,4 +21,4 @@ main.cpp alert.h uint256.h util.h netbase.h serialize.h :
  /home/valen/Gatecoin/src/leveldb/include/leveldb/status.h :
  /home/valen/Gatecoin/src/leveldb/include/leveldb/options.h :
  /home/valen/Gatecoin/src/leveldb/include/leveldb/write_batch.h init.h :
- wallet.h ui_interface.h walletdb.h base58.h checkqueue.h :
+ wallet.h ui_interface.h walletdb.h base58.h checkqueue.h blockparams.h :
