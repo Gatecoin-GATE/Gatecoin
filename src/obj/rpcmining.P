@@ -1,14 +1,14 @@
-obj/rpcmining.o: rpcmining.cpp main.h bignum.h util.h uint256.h netbase.h \
- serialize.h allocators.h version.h clientversion.h compat.h sync.h \
- threadsafety.h net.h mruset.h limitedmap.h protocol.h addrman.h hash.h \
+obj/rpcmining.o: rpcmining.cpp main.h bignum.h serialize.h allocators.h \
+ version.h clientversion.h uint256.h sync.h threadsafety.h net.h mruset.h \
+ limitedmap.h netbase.h compat.h protocol.h addrman.h util.h hash.h \
  sph_blake.h sph_types.h bloom.h script.h keystore.h crypter.h key.h db.h \
  init.h wallet.h ui_interface.h walletdb.h base58.h bitcoinrpc.h \
  json/json_spirit_reader_template.h json/json_spirit_value.h \
  json/json_spirit_error_position.h json/json_spirit_writer_template.h \
  json/json_spirit_utils.h
-rpcmining.cpp main.h bignum.h util.h uint256.h netbase.h :
- serialize.h allocators.h version.h clientversion.h compat.h sync.h :
- threadsafety.h net.h mruset.h limitedmap.h protocol.h addrman.h hash.h :
+rpcmining.cpp main.h bignum.h serialize.h allocators.h :
+ version.h clientversion.h uint256.h sync.h threadsafety.h net.h mruset.h :
+ limitedmap.h netbase.h compat.h protocol.h addrman.h util.h hash.h :
  sph_blake.h sph_types.h bloom.h script.h keystore.h crypter.h key.h db.h :
  init.h wallet.h ui_interface.h walletdb.h base58.h bitcoinrpc.h :
  json/json_spirit_reader_template.h json/json_spirit_value.h :

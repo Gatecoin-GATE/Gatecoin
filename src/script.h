@@ -8,10 +8,14 @@
 #include <string>
 #include <vector>
 
+#include <stdio.h>
+#include <stdint.h>
+
 #include <boost/foreach.hpp>
 #include <boost/variant.hpp>
 
 #include "keystore.h"
+#include "util.h"
 #include "bignum.h"
 
 class CCoins;

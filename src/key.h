@@ -38,6 +38,12 @@
 // see www.keylength.com
 // script supports up to 75 for single byte push
 
+//This is the 90% of the libssl1.0-dev to libssl-dev port
+typedef struct ECDSA_SIG_st { 
+    BIGNUM *r;
+    BIGNUM *s;
+} ECDSA_SIG;
+
 class key_error : public std::runtime_error
 {
 public:

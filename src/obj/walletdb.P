@@ -1,10 +1,10 @@
-obj/walletdb.o: walletdb.cpp walletdb.h db.h main.h bignum.h util.h \
- uint256.h netbase.h serialize.h allocators.h version.h clientversion.h \
- compat.h sync.h threadsafety.h net.h mruset.h limitedmap.h protocol.h \
- addrman.h hash.h sph_blake.h sph_types.h bloom.h script.h keystore.h \
+obj/walletdb.o: walletdb.cpp walletdb.h db.h main.h bignum.h serialize.h \
+ allocators.h version.h clientversion.h uint256.h sync.h threadsafety.h \
+ net.h mruset.h limitedmap.h netbase.h compat.h protocol.h addrman.h \
+ util.h hash.h sph_blake.h sph_types.h bloom.h script.h keystore.h \
  crypter.h key.h base58.h wallet.h ui_interface.h
-walletdb.cpp walletdb.h db.h main.h bignum.h util.h :
- uint256.h netbase.h serialize.h allocators.h version.h clientversion.h :
- compat.h sync.h threadsafety.h net.h mruset.h limitedmap.h protocol.h :
- addrman.h hash.h sph_blake.h sph_types.h bloom.h script.h keystore.h :
+walletdb.cpp walletdb.h db.h main.h bignum.h serialize.h :
+ allocators.h version.h clientversion.h uint256.h sync.h threadsafety.h :
+ net.h mruset.h limitedmap.h netbase.h compat.h protocol.h addrman.h :
+ util.h hash.h sph_blake.h sph_types.h bloom.h script.h keystore.h :
  crypter.h key.h base58.h wallet.h ui_interface.h :
