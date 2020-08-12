@@ -18,8 +18,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
-using namespace std;
-using namespace boost;
+//using namespace std;
+//using namespace boost;
 
 //
 // Global state
