@@ -1,19 +1,19 @@
-Forked from Bitcoin reference wallet 0.8.6
-
-Gatecoin Wallet
-
-https://www.gatecoin.org
+Forked from Blakecoin reference wallet 0.8.6(last)
 
 Blake-256(optimized) is faster than Scrypt, SHA-256D, Keccak, Groestl
-
-The algorithm was written as a candidate for sha3, Based on round one candidate code from the sphlib 2.1 and reduced rounds to 8.
-
-Tweaks Removed some of the double hashing from the wallet as it is wasteful on compute, No changes to the ecdsa public/private function as that has proven to be secure so far on bitcoin.
-
+The algorithm was written as a candidate for sha3, Based on round one 
+candidate code from the sphlib 2.1 and reduced rounds to 8.
 
 What is Gatecoin?
 
+Gatecoin is a coin made by miner for miners. It is a currency
+created with the objective of being mined and providing miners.
 
+More infrmation here:
+
+WEBSITE: https://gatecoin-gate.github.io/
+WHITEPAPER: https://gatecoin-gate.github.io/doc/GatecoinWhitepaper.pdf
+DISCORD: https://discord.gg/JJcytZr
 
 License
 
