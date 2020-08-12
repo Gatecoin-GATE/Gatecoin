@@ -9,8 +9,6 @@ What is Gatecoin?
 Gatecoin is a coin made by miner for miners. It is a currency
 created with the objective of being mined and providing miners.
 
-More infrmation here:
-
 WEBSITE: https://gatecoin-gate.github.io/ </br>
 WHITEPAPER: https://gatecoin-gate.github.io/doc/GatecoinWhitepaper.pdf </br>
 DISCORD: https://discord.gg/JJcytZr </br>
