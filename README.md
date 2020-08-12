@@ -12,7 +12,9 @@ created with the objective of being mined and providing miners.
 More infrmation here:
 
 WEBSITE: https://gatecoin-gate.github.io/
+
 WHITEPAPER: https://gatecoin-gate.github.io/doc/GatecoinWhitepaper.pdf
+
 DISCORD: https://discord.gg/JJcytZr
 
 License
