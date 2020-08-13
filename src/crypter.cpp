@@ -4,6 +4,12 @@
 
 #include <openssl/aes.h>
 #include <openssl/evp.h>
+#include <openssl/crypto.h>
+#include <openssl/ec.h>
+#include <openssl/ecdh.h>
+#include <openssl/sha.h>
+#include <openssl/hmac.h>
+
 #include <vector>
 #include <string>
 #ifdef WIN32
