@@ -36,7 +36,6 @@ script: |
   echo "dfd71487513c871bad485806bfd1fdb304dedc84d2b01a8fb8e0940b50597a98  qrencode-3.4.3.tar.bz2" | sha256sum -c
   #
   mkdir -p $INSTALLPREFIX
-  
   tar xzf openssl-1.0.1k.tar.gz
   cd openssl-1.0.1k
   ./Configure --cross-compile-prefix=$HOST- mingw --openssldir=$INSTALLPREFIX
