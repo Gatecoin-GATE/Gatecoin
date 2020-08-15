@@ -56,22 +56,7 @@ Dependency Build Instructions: Ubuntu & Debian
 Build requirements:
 
 	sudo apt-get install build-essential
-	sudo apt-get install git build-essential libssl1.0-dev libboost-all-dev libdb-dev libgtk2.0-dev libminiupnpc-dev libqt4-dev synaptic libdb++-dev
-
-for Ubuntu 12.04:
-
-	sudo apt-get install libboost-all-dev
-
- db4.8 packages are available [here](https://launchpad.net/~bitcoin/+archive/bitcoin).
-
- Ubuntu precise has packages for libdb5.1-dev and libdb5.1++-dev,
- but using these will break binary wallet compatibility, and is not recommended.
-
-for other Ubuntu & Debian:
-
-	sudo apt-get install git build-essential libssl1.0-dev libboost-all-dev libdb5.1-dev libdb5.1++-dev libgtk2.0-dev libminiupnpc-dev qt4-dev synaptic libdb++-dev
-	
- (If using Boost 1.37, append -mt to the boost libraries in the makefile)
+	sudo apt-get install git build-essential libssl-dev libboost-all-dev libdb-dev libgtk2.0-dev libminiupnpc-dev qt5-default synaptic libdb++-dev
 
 Optional:
 
@@ -83,14 +68,14 @@ Dependency Build Instructions: Gentoo
 
 Note: If you just want to install bitcoind on Gentoo, you can add the Bitcoin overlay and use your package manager:
 
-	layman -a bitcoin && emerge bitcoind
-	emerge -av1 --noreplace boost glib openssl sys-libs/db:4.8
+	layman -a gatecoin && emerge gatecoind
+	emerge -av1 --noreplace boost glib openssl
 
 Take the following steps to build (no UPnP support):
 
 	cd ${BITCOIN_DIR}/src
-	make -f makefile.unix USE_UPNP= USE_IPV6=1 BDB_INCLUDE_PATH='/usr/include/db4.8'
-	strip bitcoind
+	make -f makefile.unix USE_UPNP=-
+	strip gatecoind
 
 
 Notes
@@ -110,20 +95,13 @@ miniupnpc
 
 Berkeley DB
 -----------
-You need Berkeley DB 4.8.  If you have to build Berkeley DB yourself:
-
-	../dist/configure --enable-cxx
-	make
+	sudo apt-get install libdb-dev libdb++-dev
 
 
 Boost
 -----
-If you need to build Boost yourself:
-
-	sudo su
-	./bootstrap.sh
-	./bjam install
-
+	sudo apt-get install libboost-all-dev
+	
 
 Security
 --------
@@ -146,7 +124,7 @@ exploit even if a vulnerability is found, you can take the following measures:
 
     To test that you have built PIE executable, install scanelf, part of paxutils, and use:
 
-    	scanelf -e ./bitcoin
+    	scanelf -e ./gatecoin
 
     The output should contain:
      TYPE
@@ -160,7 +138,7 @@ exploit even if a vulnerability is found, you can take the following measures:
     executable without the non-executable stack protection.
 
     To verify that the stack is non-executable after compiling use:
-    `scanelf -e ./bitcoin`
+    `scanelf -e ./gatecoin`
 
     the output should contain:
 	STK/REL/PTL
