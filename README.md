@@ -6,16 +6,16 @@
 What is Gatecoin ?
 ----------------------
 
-Lightning Cash is a coin based on Yespower POW algorithm, including DarkGravityWave ( difficulty changes for every block ) and possible CURRENT block difficulty change over time to protect against high network hash variation and long stale tip. For full details, please visit our website at https://lightningcash.tk . Compiled binary releases are available on Github.
+Gatecoin is a coin based on Blake-256 POW algorithm, including VRX ( difficulty changes for every block ), 51% attacks and time warp attacks. For full details, please visit our website at https://gatecoin-gate.github.io . Compiled binary releases are available on Github.
 
 
-Website : https://lightningcash.tk
+Website : https://gatecoin-gate.github.io
 
-Pool : https://pool.lightningcash.tk
+Pool : IN THE LAUNCH
 
-Block Explorer : https://explorer.lightningcash.tk
+Block Explorer : NO YET :(
 
-Discord Channel : https://discord.gg/wYcq4z8
+Discord Channel : https://discord.gg/JJcytZr
 
 # Characteristics
 -------------------
@@ -29,16 +29,14 @@ Difficulty adjusted every block and possibly in CURRENT block if a long network 
 
 10 minutes block time.
 
-Number of confirmations needed for a transaction : 6 (transaction is confirmed in approximately 30 seconds)
-
 Premine : 100,000 coins, barely above 1 % of max supply
 
-Block Reward : 50 Gatecoin - halved every 1 051 200 blocks
+Block Reward : 50 Gatecoin - halved every 105 120 blocks ( 2 years )
 
 # Development Process
 -------------------
 
-You can fork LightningCash github's repository, tweak the code and suggest pull request if you have bug fixes or improvements to propose.
+You can fork Gatecoin github's repository, tweak the code and suggest pull request if you have bug fixes or improvements to propose.
 
 # Testing
 -------
