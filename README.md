@@ -11,7 +11,7 @@ Gatecoin is a coin based on Blake-256 POW algorithm, including VRX ( difficulty 
 
 Website : https://gatecoin-gate.github.io
 
-Pool : IN THE LAUNCH
+Pool : http://104.238.134.74/
 
 Block Explorer : NO YET :(
 
