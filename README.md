@@ -31,7 +31,7 @@ Difficulty adjusted every block and possibly in CURRENT block if a long network 
 
 Premine : 100,000 coins, barely above 1 % of max supply
 
-Block Reward : 50 Gatecoin - halved every 105 120 blocks ( 2 years )
+Block Reward : 50 Gatecoin - halved every 105,120 blocks ( 2 years )
 
 # Development Process
 -------------------
