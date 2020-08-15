@@ -1,7 +1,7 @@
 src/*.exe
 src/bitcoin
-src/bitcoind
-src/test_bitcoin
+src/gatecoind
+src/test_gatecoin
 src/qt/locale/*.ts
 .*.swp
 *.*~*
