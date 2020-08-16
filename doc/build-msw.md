@@ -1,4 +1,4 @@
-Copyright (c) 2009-2013 Bitcoin Developers
+Copyright (c) 2020-2020 Gatecoin Developers
 
 Distributed under the MIT/X11 software license, see the accompanying
 file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -6,85 +6,110 @@ This product includes software developed by the OpenSSL Project for use in the [
 cryptographic software written by Eric Young ([eay@cryptsoft.com](mailto:eay@cryptsoft.com)), and UPnP software written by Thomas Bernard.
 
 
-See readme-qt.rst for instructions on building Bitcoin-Qt, the
-graphical user interface.
-
 WINDOWS BUILD NOTES
 ===================
 
-Compilers Supported
--------------------
-TODO: What works?
-Note: releases are cross-compiled using mingw running on Linux.
-
-
-Dependencies
-------------
-Libraries you need to download separately and build:
-
-                default path               download
-OpenSSL         \openssl-1.0.1c-mgw        http://www.openssl.org/source/
-Berkeley DB     \db-4.8.30.NC-mgw          http://www.oracle.com/technology/software/products/berkeley-db/index.html
-Boost           \boost-1.50.0-mgw          http://www.boost.org/users/download/
-miniupnpc       \miniupnpc-1.6-mgw         http://miniupnp.tuxfamily.org/files/
-
-Their licenses:
-
-	OpenSSL        Old BSD license with the problematic advertising requirement
-	Berkeley DB    New BSD license with additional requirement that linked software must be free open source
-	Boost          MIT-like license
-	miniupnpc      New (3-clause) BSD license
-
-Versions used in this release:
-
-	OpenSSL      1.0.1c
-	Berkeley DB  4.8.30.NC
-	Boost        1.50.0
-	miniupnpc    1.6
-
-
-OpenSSL
+Commands:
 -------
-MSYS shell:
+WLS:
 
-un-tar sources with MSYS 'tar xfz' to avoid issue with symlinks (OpenSSL ticket 2377)
-change 'MAKE' env. variable from 'C:\MinGW32\bin\mingw32-make.exe' to '/c/MinGW32/bin/mingw32-make.exe'
+	sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ /
+	gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make openssl patch perl pkg-config /
+	python ruby scons sed unzip wget xz-utils
 
-	cd /c/openssl-1.0.1c-mgw
-	./config
+If WLS is 64 bits, run too:
+
+	sudo apt-get install g++-multilib libc6-dev-i386
+	
+Then, in WLS as ROOT (Building dependencies):
+	
+	cd /mnt
+	git clone https://github.com/mxe/mxe.git
+	
+	cd /mnt/mxe
+	make MXE_TARGETS="i686-w64-mingw32.static" boost
+	make MXE_TARGETS="i686-w64-mingw32.static" qttools
+	
+	cd /mnt
+	wget http://download.oracle.com/berkeley-db/db-5.3.28.tar.gz
+	tar zxvf db-5.3.28.tar.gz
+	cd /mnt/db-5.3.28
+	touch compile-db.sh
+	chmod ugo+x compile-db.sh
+	nano compile-db.sh
+
+Then, in the editor, paste this:
+
+	#!/bin/bash
+	MXE_PATH=/mnt/mxe
+	sed -i "s/WinIoCtl.h/winioctl.h/g" src/dbinc/win_db.h
+	mkdir build_mxe
+	cd build_mxe
+
+	CC=$MXE_PATH/usr/bin/i686-w64-mingw32.static-gcc \
+	CXX=$MXE_PATH/usr/bin/i686-w64-mingw32.static-g++ \
+	../dist/configure \
+		--disable-replication \
+		--enable-mingw \
+		--enable-cxx \
+		--host x86 \
+		--prefix=$MXE_PATH/usr/i686-w64-mingw32.static
+
 	make
+	make install
+	
+Do CRTL+O to save and then, run it with:
 
-Berkeley DB
------------
-MSYS shell:
+	./compile-db.sh
+	
+Then, in WLS (Still with ROOT) (Building dependencies):
 
-	cd /c/db-4.8.30.NC-mgw/build_unix
-	sh ../dist/configure --enable-mingw --enable-cxx
-	make
+	cd /mnt
+	wget http://miniupnp.free.fr/files/miniupnpc-1.6.20120509.tar.gz
+	tar zxvf miniupnpc-1.6.20120509.tar.gz
+	cd /mnt/miniupnpc-1.6.20120509
+	touch compile-m.sh
+	chmod ugo+x compile-m.sh
+	nano compile-m.sh
+	
+Then, in the editor, paste this:
+	
+	#!/bin/bash
+	MXE_PATH=/mnt/mxe
 
-Boost
------
-DOS prompt:
+	CC=$MXE_PATH/usr/bin/i686-w64-mingw32.static-gcc \
+	AR=$MXE_PATH/usr/bin/i686-w64-mingw32.static-ar \
+	CFLAGS="-DSTATICLIB -I$MXE_PATH/usr/i686-w64-mingw32.static/include" \
+	LDFLAGS="-L$MXE_PATH/usr/i686-w64-mingw32.static/lib" \
+	make libminiupnpc.a
 
-	downloaded boost jam 3.1.18
-	cd \boost-1.50.0-mgw
-	bjam toolset=gcc --build-type=complete stage
+	mkdir $MXE_PATH/usr/i686-w64-mingw32.static/include/miniupnpc
+	cp *.h $MXE_PATH/usr/i686-w64-mingw32.static/include/miniupnpc
+	cp libminiupnpc.a $MXE_PATH/usr/i686-w64-mingw32.static/lib
 
-MiniUPnPc
----------
-UPnP support is optional, make with `USE_UPNP=` to disable it.
+Do CRTL+O to save and then, run it with:
 
-MSYS shell:
+	./compile-m.sh
+	
+Now, we begin building the wallet:
 
-	cd /c/miniupnpc-1.6-mgw
-	make -f Makefile.mingw
-	mkdir miniupnpc
-	cp *.h miniupnpc/
+	export PATH=/mnt/mxe/usr/bin:$PATH
+	
+	cd /mnt
+	git clone https://github.com/Gatecoin-GATE/Gatecoin.git
+	
+	cd /mnt/Gatecoin/src/leveldb
+	TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/mnt/mxe/usr/bin/i686-w64-mingw32.static-gcc CXX=/mnt/mxe/usr/bin/i686-w64-mingw32.static-g++
+	
+	cd /mnt/Gatecoin
+	chmod ugo+x compile-msw-mxe.sh
+	./compile-msw-mxe.sh
 
-Bitcoin
--------
-DOS prompt:
+Then, the gatecoin-qt.exe is in /mnt/Gatecoin/release
 
-	cd \bitcoin\src
-	mingw32-make -f makefile.mingw
-	strip bitcoind.exe
+	
+	
+	
+
+
+
