@@ -1089,10 +1089,9 @@ int64 static GetBlockValue(int nHeight, int64 nFees, unsigned int nBits)
 {
 	int64 nSubsidy = nBlockRewardStartCoin;
 
-	if (nHeight == 1)
-        nSubsidy = nGenesisBlockRewardCoin;
+	if (nHeight > 0 && nHeight <= 20)
+        nSubsidy = nGenesisBlockRewardCoin / 20;
     
-
     nSubsidy >>= (nHeight / 105120); // Gatecoin: 105120 blocks in ~2 years
 
     return nSubsidy + nFees;
