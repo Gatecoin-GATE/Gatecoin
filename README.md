@@ -12,6 +12,7 @@ Website : https://gatecoin-gate.github.io </br>
 Pool : http://104.238.134.74/ </br>
 Block Explorer : NO YET :( </br>
 Discord Channel : https://discord.gg/JJcytZr </br>
+Whitepaper : https://gatecoin-gate.github.io/doc/GatecoinWhitepaper.pdf </br>
 
 # Characteristics
 -------------------
