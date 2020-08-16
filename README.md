@@ -6,12 +6,12 @@
 What is Gatecoin ?
 ----------------------
 
-Gatecoin is a coin based on Blake-256 POW algorithm, including VRX ( difficulty changes for every block, 51% attacks and time warp attacks ). For full details, please visit our website at https://gatecoin-gate.github.io . Compiled binary releases are available on Github.
+Gatecoin is a coin based on Blake-256 POW algorithm, including VRX ( difficulty changes for every block, 51% attacks and time warp attacks ). For full details, please visit our website at https://gatecoin-gate.github.io . Compiled binary releases are available on Github. </br>
 
-Website : https://gatecoin-gate.github.io
-Pool : http://104.238.134.74/
-Block Explorer : NO YET :(
-Discord Channel : https://discord.gg/JJcytZr
+Website : https://gatecoin-gate.github.io </br> 
+Pool : http://104.238.134.74/ </br>
+Block Explorer : NO YET :( </br>
+Discord Channel : https://discord.gg/JJcytZr </br>
 
 # Characteristics
 -------------------
