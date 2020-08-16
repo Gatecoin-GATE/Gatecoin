@@ -1,18 +1,21 @@
 TEMPLATE = app
 TARGET = gatecoin-qt
 macx:TARGET = "Gatecoin-Qt"
-VERSION = 1.0.0.0
+VERSION = 1.0.0.3
 INCLUDEPATH += src src/json src/qt
 QT += core gui network
 #DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
+
+CONFIG += c++11
 CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
 CONFIG += openssl
 
 QMAKE_CXXFLAGS += -fpermissive
+MXE_TARGETS=i686-w64-mingw32.shared.posix
 
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
@@ -29,7 +32,7 @@ windows:LIBS += -lshlwapi
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread
-BOOST_LIB_SUFFIX=-mgw8-mt-s-x32-1_73
+BOOST_LIB_SUFFIX=-mt
 BOOST_INCLUDE_PATH=C:/deps/boost_1_73_0
 BOOST_LIB_PATH=C:/deps/boost_1_73_0/stage/lib
 BDB_INCLUDE_PATH=C:/deps/db-6.2.38.NC/build_unix
@@ -444,7 +447,7 @@ LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
 windows:LIBS += libboost_system$$BOOST_LIB_SUFFIX libboost_filesystem$$BOOST_LIB_SUFFIX libboost_program_options$$BOOST_LIB_SUFFIX libboost_thread$$BOOST_THREAD_LIB_SUFFIX
-!windows:LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread -lboost_chrono
+#!windows:LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread -lboost_chrono
 windows:LIBS += libboost_chrono$$BOOST_LIB_SUFFIX
 
 contains(RELEASE, 1) {

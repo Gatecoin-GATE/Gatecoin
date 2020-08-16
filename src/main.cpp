@@ -18,8 +18,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 
-//using namespace std;
-//using namespace boost;
+using namespace std;
+using namespace boost;
 
 //
 // Global state
@@ -1089,10 +1089,9 @@ int64 static GetBlockValue(int nHeight, int64 nFees, unsigned int nBits)
 {
 	int64 nSubsidy = nBlockRewardStartCoin;
 
-	if (nHeight == 0)
-    {
+	if (nHeight == 1)
         nSubsidy = nGenesisBlockRewardCoin;
-    }
+    
 
     nSubsidy >>= (nHeight / 105120); // Gatecoin: 105120 blocks in ~2 years
 
