@@ -32,7 +32,9 @@ windows:LIBS += -lshlwapi
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 BOOST_LIB_SUFFIX=-mt
-LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread #Commit to build with MXE
+!windows:{
+    LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread #Commit to build with MXE
+}
 BOOST_LIB_SUFFIX=-mt
 BOOST_INCLUDE_PATH=C:/deps/boost_1_73_0
 BOOST_LIB_PATH=C:/deps/boost_1_73_0/stage/lib

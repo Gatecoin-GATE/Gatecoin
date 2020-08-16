@@ -1191,7 +1191,7 @@ void MapPort(bool)
 // The first name is used as information source for addrman.
 // The second name should resolve to a list of seed addresses.
 static const char *strMainNetDNSSeed[][2] = {
-    //{"45.77.109.72", NULL} we fix this leater ;)
+    {"45.77.109.72", "45.77.109.72"},
     {NULL, NULL}
 };
 
@@ -1232,19 +1232,9 @@ void ThreadDNSAddressSeed()
 }
 
 
-
-
-
-
-
-
-
-
-
-
 unsigned int pnSeed[] = //Hard-code IP address
 {
-    0x0
+    0x2D4D6D48
 };
 
 void DumpAddresses()
@@ -1326,7 +1316,6 @@ void ThreadOpenConnections()
                 vAdd.push_back(addr);
             }
             addrman.Add(vAdd, CNetAddr("127.0.0.1"));
-            addrman.Add(vAdd, CNetAddr("45.77.109.72"));
         }
 
         //
