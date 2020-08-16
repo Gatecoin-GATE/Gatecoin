@@ -13,7 +13,6 @@
 #include "init.h"
 #include "ui_interface.h"
 #include "checkqueue.h"
-#include "blockparams.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -1082,8 +1081,8 @@ static const int64 nGenesisBlockRewardCoin = 100000 * COIN; //100k premine(1% of
 static const int64 nBlockRewardStartCoin = 50 * COIN;
 
 static const int64 nTargetTimespan = 10 * 60; // 10 minutes diff retarget
-static const int64 nTargetSpacing = 10 * 60; // 10 minutes block time
-static const int64 nInterval = nTargetTimespan / nTargetSpacing; // every block
+//static const int64 nTargetSpacing = 10 * 60; // 10 minutes block time
+//static const int64 nInterval = nTargetTimespan / nTargetSpacing; // every block
 
 int64 static GetBlockValue(int nHeight, int64 nFees, unsigned int nBits)
 {
@@ -1103,99 +1102,53 @@ int64 static GetBlockValue(int nHeight, int64 nFees, unsigned int nBits)
 //
 unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
 {
-    // Testnet has min-difficulty blocks
-    // after nTargetSpacing*2 time between blocks:
-    if (fTestNet && nTime > nTargetSpacing*2)
-        return bnProofOfWorkLimit.GetCompact();
-
-    CBigNum bnResult;
-    bnResult.SetCompact(nBase);
-    while (nTime > 0 && bnResult < bnProofOfWorkLimit)
-    {
-        // Maximum 150% adjustment
-        bnResult *= 150;
-        bnResult /= 100;
-        // ... per timespan
-        nTime -= nTargetTimespan*2;
-    }
-    if (bnResult > bnProofOfWorkLimit)
-        bnResult = bnProofOfWorkLimit;
-    return bnResult.GetCompact();
+    const CBigNum &bnLimit = bnProofOfWorkLimit;
+    return bnLimit.GetCompact();
 }
 
-unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
+// DarkGravityWave3/2
+// - every block retarget
+// - 12 blocks average
+// - 300% up and 300% down
+unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
-    unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
+    const int64_t nAverageBlocks = 10;
+    const int64_t nTargetSpacing = 10 * 60;
+    const int64_t nTargetTimespan = nAverageBlocks * nTargetSpacing;
 
-    // Genesis block
-    if (pindexLast == NULL)
-        return nProofOfWorkLimit;
+    if (pindexLast == NULL || pindexLast->nHeight <= nAverageBlocks)
+        return bnProofOfWorkLimit.GetCompact();
 
-    // Only change once per interval
-    if ((pindexLast->nHeight+1) % nInterval != 0)
-    {
-        // Special difficulty rule for testnet:
-        if (fTestNet)
-        {
-            // If the new block's timestamp is more than 2 * nTargetSpacing
-            // then allow mining of a min-difficulty block.
-            if (pblock->nTime > pindexLast->nTime + nTargetSpacing*2)
-                return nProofOfWorkLimit;
-            else
-            {
-                // Return the last non-special-min-difficulty-rules-block
-                const CBlockIndex* pindex = pindexLast;
-                while (pindex->pprev && pindex->nHeight % nInterval != 0 && pindex->nBits == nProofOfWorkLimit)
-                    pindex = pindex->pprev;
-                return pindexLast->nBits;
-                //return DarkGravityWave3(pindexLast, pblock);
-            }
-        }
-
-        return pindexLast->nBits;
-        //return DarkGravityWave3(pindexLast, pblock);
-    }
-
-    // Go back by what we want to be nInterval blocks
     const CBlockIndex* pindexFirst = pindexLast;
-    for (int i = 0; pindexFirst && i < nInterval-1; i++)
+    CBigNum bnOldAvg = 0;
+    for (int i = 0; i < nAverageBlocks; i++) {
+        CBigNum bnTmp;
+        bnTmp.SetCompact(pindexFirst->nBits);
+        bnOldAvg += bnTmp;
+
         pindexFirst = pindexFirst->pprev;
-    assert(pindexFirst);
+        assert(pindexFirst);
+    }
+    bnOldAvg /= nAverageBlocks;
 
     // Limit adjustment step
-    int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
-    printf("  nActualTimespan = %"PRI64d"  before bounds\n", nActualTimespan);
-    const CBlockIndex* nActualHeight = pindexLast;
-    int pHeight = nActualHeight->nHeight;
-    printf("  pHeight = %"PRI64d"  \n", pHeight);
-    int64 LimitUp = nTargetTimespan * 100 / 115; // up 15%
-    int64 LimitUp2 = nTargetTimespan * 100 / 103; // up 3%
-
-    if (nActualTimespan < nTargetTimespan/4 && pHeight >= 3500)
-       {
-        nActualTimespan = LimitUp2;
-       }
-    if (nActualTimespan < LimitUp && pHeight <= 3499)
-       {
-        nActualTimespan = LimitUp;
-       }
-    if (nActualTimespan > nTargetTimespan*2)
-        nActualTimespan = nTargetTimespan*2;
+    int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+    if (nActualTimespan < nTargetTimespan/3)
+        nActualTimespan = nTargetTimespan/3;
+    if (nActualTimespan > nTargetTimespan*3)
+        nActualTimespan = nTargetTimespan*3;
 
     // Retarget
-    CBigNum bnNew;
-    bnNew.SetCompact(pindexLast->nBits);
+    CBigNum bnNew(bnOldAvg);
     bnNew *= nActualTimespan;
     bnNew /= nTargetTimespan;
 
     if (bnNew > bnProofOfWorkLimit)
         bnNew = bnProofOfWorkLimit;
 
-    /// debug print
-    printf("GetNextWorkRequired RETARGET\n");
-    printf("nTargetTimespan = %"PRI64d"    nActualTimespan = %"PRI64d"\n", nTargetTimespan, nActualTimespan);
-    printf("Before: %08x  %s\n", pindexLast->nBits, CBigNum().SetCompact(pindexLast->nBits).getuint256().ToString().c_str());
-    printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
+    printf("GetNextWorkRequired Last %d First %d Actual %d Limit %d Target %d Before %08x After %08x\n",
+            pindexLast->nHeight, pindexFirst->nHeight, pindexLast->GetBlockTime() - pindexFirst->GetBlockTime(),
+            nActualTimespan, nTargetTimespan, bnOldAvg.GetCompact(), bnNew.GetCompact());
 
     return bnNew.GetCompact();
 }
