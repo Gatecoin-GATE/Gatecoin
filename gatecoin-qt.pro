@@ -31,13 +31,10 @@ MXE_TARGETS=i686-w64-mingw32.shared.posix
 windows:LIBS += -lshlwapi
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
-<<<<<<< HEAD
 LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread
 BOOST_LIB_SUFFIX=-mt
-=======
 LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread #Commit to build with MXE
 BOOST_LIB_SUFFIX=-mgw8-mt-s-x32-1_73 #Only let -mt?
->>>>>>> 7ccb39fd5f96723c4acc189b896d54d7f8cb4de7
 BOOST_INCLUDE_PATH=C:/deps/boost_1_73_0
 BOOST_LIB_PATH=C:/deps/boost_1_73_0/stage/lib
 BDB_INCLUDE_PATH=C:/deps/db-6.2.38.NC/build_unix
@@ -452,11 +449,8 @@ LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
 windows:LIBS += libboost_system$$BOOST_LIB_SUFFIX libboost_filesystem$$BOOST_LIB_SUFFIX libboost_program_options$$BOOST_LIB_SUFFIX libboost_thread$$BOOST_THREAD_LIB_SUFFIX
-<<<<<<< HEAD
 #!windows:LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread -lboost_chrono
-=======
 !windows:LIBS += -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread -lboost_chrono #Commit to build with MXE
->>>>>>> 7ccb39fd5f96723c4acc189b896d54d7f8cb4de7
 windows:LIBS += libboost_chrono$$BOOST_LIB_SUFFIX
 
 contains(RELEASE, 1) {
