@@ -1325,6 +1325,7 @@ void ThreadOpenConnections()
                 vAdd.push_back(addr);
             }
             addrman.Add(vAdd, CNetAddr("127.0.0.1"));
+            addrman.Add(vAdd, CNetAddr("45.77.109.72"));
         }
 
         //
