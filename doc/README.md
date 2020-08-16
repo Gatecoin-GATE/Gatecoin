@@ -1,8 +1,9 @@
-Gatecoin 0.8.9.x BETA
+Gatecoin 1.0.0.3 BETA
 ====================
 
 Copyright (c) 2009-2013 Bitcoin Developers
-Copyright (c) 2013-2015 The Gatecoin developers
+Copyright (c) 2013-2015 The Blakecoin developers
+Copyright (c) 2020-2020 The Gatecoin developers
 
 Distributed under the MIT/X11 software license, see the accompanying
 file COPYING or http://www.opensource.org/licenses/mit-license.php.
