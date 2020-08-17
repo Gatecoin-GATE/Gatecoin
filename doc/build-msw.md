@@ -29,6 +29,7 @@ Then, in WLS as ROOT (Building dependencies):
 	cd /mnt/mxe
 	make MXE_TARGETS="i686-w64-mingw32.static" boost
 	make MXE_TARGETS="i686-w64-mingw32.static" qttools
+	make MXE_TARGETS="i686-w64-mingw32.static" openssl
 	
 	cd /mnt
 	wget http://download.oracle.com/berkeley-db/db-5.3.28.tar.gz
@@ -106,6 +107,14 @@ Now, we begin building the wallet:
 	./compile-msw-mxe.sh
 
 Then, the gatecoin-qt.exe is in /mnt/Gatecoin/release
+
+If you want build the deamon(AS ROOT):
+
+	cd /mnt/Gatecoin/src
+	chmod ugo+x compile-msw-mxe-d.sh
+	./compile-msw-mxe.sh
+	
+Then, the gatecoind.exe go to be in /mnt/Gatecoin/src
 
 	
 	
