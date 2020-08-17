@@ -74,6 +74,7 @@ Note: If you just want to install bitcoind on Gentoo, you can add the Bitcoin ov
 Take the following steps to build (no UPnP support):
 
 	cd ${BITCOIN_DIR}/src
+	chmod +x leveldb/build_detect_platform
 	make -f makefile.unix USE_UPNP=-
 	strip gatecoind
 
