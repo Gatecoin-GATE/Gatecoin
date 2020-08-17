@@ -124,6 +124,8 @@ If you want build the deamon(AS ROOT):
 	
 Then, the gatecoind.exe go to be in /mnt/Gatecoin/src
 
+**If you get a error related to build.h, copy the build.h that is in src/obj/build.h to src
+
 	
 	
 	
