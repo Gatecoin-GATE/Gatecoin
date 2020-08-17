@@ -120,7 +120,7 @@ If you want build the deamon(AS ROOT):
 
 	cd /mnt/Gatecoin/src
 	chmod ugo+x compile-msw-mxe-d.sh
-	./compile-msw-mxe.sh
+	./compile-msw-mxe-d.sh
 	
 Then, the gatecoind.exe go to be in /mnt/Gatecoin/src
 
