@@ -30,7 +30,6 @@ Then, in WLS as ROOT (Building dependencies):
 	make MXE_TARGETS="i686-w64-mingw32.static" boost
 	make MXE_TARGETS="i686-w64-mingw32.static" qttools
 	make MXE_TARGETS="i686-w64-mingw32.static" openssl
-	make MXE_TARGETS="i686-w64-mingw32.static" miniupnpc
 	
 	cd /mnt
 	wget http://download.oracle.com/berkeley-db/db-5.3.28.tar.gz
