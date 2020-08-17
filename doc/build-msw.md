@@ -13,9 +13,9 @@ Commands:
 -------
 WLS:
 
-	sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++
-	sudo apt-get install gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make 
-	sudo apt-get install openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils
+	sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ libgdk-pixbuf2.0-dev
+	sudo apt-get install gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make lzip
+	sudo apt-get install openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils libtool-bin
 
 If WLS is 64 bits, run too:
 
