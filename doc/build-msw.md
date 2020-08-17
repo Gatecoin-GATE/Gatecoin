@@ -109,6 +109,14 @@ Now, we begin building the wallet:
 Then, the gatecoin-qt.exe is in /mnt/Gatecoin/release
 
 If you want build the deamon(AS ROOT):
+	
+	export PATH=/mnt/mxe/usr/bin:$PATH
+
+	cd /mnt
+	git clone https://github.com/Gatecoin-GATE/Gatecoin.git
+
+	cd /mnt/Gatecoin/src/leveldb
+	TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/mnt/mxe/usr/bin/i686-w64-mingw32.static-gcc CXX=/mnt/mxe/usr/bin/i686-w64-mingw32.static-g++
 
 	cd /mnt/Gatecoin/src
 	chmod ugo+x compile-msw-mxe-d.sh
