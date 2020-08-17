@@ -10,7 +10,7 @@ Gatecoin is a coin based on Blake-256 POW algorithm, including DGW ( difficulty 
 
 Website : https://gatecoin-gate.github.io </br> 
 Pool : http://104.238.134.74/ </br>
-Block Explorer : NO YET :( </br>
+Block Explorer : http://68.232.175.168/ </br>
 Discord Channel : https://discord.gg/JJcytZr </br>
 Whitepaper : https://gatecoin-gate.github.io/doc/GatecoinWhitepaper.pdf </br>
 
