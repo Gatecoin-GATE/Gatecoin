@@ -1193,6 +1193,7 @@ void MapPort(bool)
 static const char *strMainNetDNSSeed[][2] = {
     {"45.77.109.72", "45.32.196.227"},
     {"136.244.96.121", "99.145.224.230"},
+    {"86.57.193.186", "86.57.193.186"},
     {NULL, NULL}
 };
 
@@ -1235,7 +1236,7 @@ void ThreadDNSAddressSeed()
 
 unsigned int pnSeed[] = //Hard-code IP address
 {
-    0x2D4D6D48, 0x2D20C4E3, 0x88F46079, 0x6391E0E6
+    0x2D4D6D48, 0x2D20C4E3, 0x88F46079, 0x6391E0E6, 0x5639C1BA
 };
 
 void DumpAddresses()
