@@ -11,7 +11,7 @@
 const std::string CLIENT_NAME("Gate");
 
 // Client version number
-#define CLIENT_VERSION_SUFFIX   "-beta" 
+#define CLIENT_VERSION_SUFFIX   "-release" 
 
 //-alpha for testing something experimental
 //-beta, released but still working 
@@ -47,10 +47,10 @@ const std::string CLIENT_NAME("Gate");
 //GATECOIN: More simple version system
 
 #define BUILD_DESC_FROM_COMMIT(maj,min,rev,build,commit) \
-    "v1.0.0.3"
+    "v1.0.0.4"
 
 #define BUILD_DESC_FROM_UNKNOWN(maj,min,rev,build) \
-    "v1.0.0.3"
+    "v1.0.0.4"
 
 #ifndef BUILD_DESC
 #    ifdef GIT_COMMIT_ID
