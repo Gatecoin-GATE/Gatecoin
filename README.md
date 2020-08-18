@@ -14,7 +14,7 @@ Pool :
        stratum+tcp://blakecoin.pool.atomminer.com:5213     
        
 (Blakecoin is bcs the algorithm, but the pool is for Gatecoin)</br></br>
-Block Explorer : http://68.232.175.168/ (temporaly down)</br>
+Block Explorer : https://openchains.info/coin/gatecoin/blocks (temporaly down)</br>
 Discord Channel : https://discord.gg/JJcytZr </br>
 Whitepaper : https://gatecoin-gate.github.io/doc/GatecoinWhitepaper.pdf </br>
 
